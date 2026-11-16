@@ -1,0 +1,61 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { EMAIL, FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, waLink, whatsappAction } from '~/data/contact';
+
+const metadata = {
+  title: 'Contacto: consultá por WhatsApp o por mail',
+  description:
+    'Contactá a Arbel Agroventas por WhatsApp, mail o redes. Atendemos las 24 horas, online y de forma presencial, desde Melincué, Santa Fe.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Contacto"
+    title="Escribinos, te respondemos"
+    subtitle="La forma más rápida es WhatsApp. Atendemos las 24 horas, online y de forma presencial."
+    callToAction={whatsappAction()}
+  />
+
+  <Features2
+    id="datos-de-contacto"
+    title="Más formas de contactarnos"
+    columns={2}
+    items={[
+      {
+        title: 'WhatsApp',
+        description: `${PHONE_DISPLAY} · Contanos qué equipo buscás.`,
+        icon: 'tabler:brand-whatsapp',
+        href: waLink(),
+      },
+      {
+        title: 'Email',
+        description: EMAIL,
+        icon: 'tabler:mail',
+        href: `mailto:${EMAIL}`,
+      },
+      {
+        title: 'Instagram',
+        description: '@arbel.agroventas · Mirá los equipos que publicamos.',
+        icon: 'tabler:brand-instagram',
+        href: INSTAGRAM_URL,
+      },
+      {
+        title: 'Facebook',
+        description: 'Arbel Agroventas · Carlos Arbel.',
+        icon: 'tabler:brand-facebook',
+        href: FACEBOOK_URL,
+      },
+    ]}
+  />
+
+  <CallToAction id="ubicacion" title="Zona de trabajo" subtitle="Melincué, Santa Fe. Enviamos a distintos puntos del país." />
+
+  <CallToAction id="consulta" layout="banner" actions={[whatsappAction()]}>
+    <Fragment slot="title">¿Tenés dudas sobre un equipo?</Fragment>
+    <Fragment slot="subtitle">Consultá por WhatsApp, a cualquier hora.</Fragment>
+  </CallToAction>
+</Layout>

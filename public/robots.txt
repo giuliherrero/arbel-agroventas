@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://arbel-agroventas.vercel.app/sitemap-index.xml

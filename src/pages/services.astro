@@ -1,0 +1,46 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { categorias } from '~/data/servicios';
+import { whatsappAction } from '~/data/contact';
+
+const metadata = {
+  title: 'Servicios: maquinaria, implementos, silos y repuestos agrícolas',
+  description:
+    'Cosechadoras, tractores, cabezales, acoplados, sembradoras, silos, tinglados y repuestos agrícolas en Melincué, Santa Fe. Consultá por WhatsApp.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Servicios"
+    title="Lo que vendemos en Arbel Agroventas"
+    subtitle="Maquinaria, implementos, estructuras y repuestos para el trabajo en el campo. Si no ves lo que buscás, escribinos: los equipos van cambiando."
+    callToAction={whatsappAction()}
+  />
+
+  {
+    categorias.map((categoria, index) => (
+      <Content
+        id={categoria.id}
+        tagline={`Categoría ${index + 1} de ${categorias.length}`}
+        title={categoria.title}
+        content={categoria.description}
+        items={categoria.items.map((title) => ({ title }))}
+        image={{ ...categoria.image, aspect: 'auto' }}
+        isReversed={index % 2 === 1}
+      >
+        <Fragment slot="bg">
+          <div class:list={['absolute inset-0', index % 2 === 0 ? 'bg-teal-50' : '']} />
+        </Fragment>
+      </Content>
+    ))
+  }
+
+  <CallToAction id="consulta" layout="banner" actions={[whatsappAction()]}>
+    <Fragment slot="title">¿Qué equipo estás buscando?</Fragment>
+    <Fragment slot="subtitle">Escribinos por WhatsApp y te contamos qué hay disponible.</Fragment>
+  </CallToAction>
+</Layout>

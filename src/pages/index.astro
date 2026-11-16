@@ -1,0 +1,221 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import { SITE, I18N } from 'astrowind:config';
+import favIconSvg from '~/assets/favicons/favicon.svg';
+import { categorias, flyers } from '~/data/servicios';
+import { BUSINESS_NAME, EMAIL, FACEBOOK_URL, INSTAGRAM_URL, waLink, whatsappAction } from '~/data/contact';
+
+const metadata = {
+  title: 'Maquinaria e implementos agrícolas en Melincué, Santa Fe',
+  description:
+    'Venta de maquinaria agrícola, implementos, silos, tinglados y repuestos en Melincué, Santa Fe. Envíos a todo el país. Consultá por WhatsApp.',
+  ignoreTitleTemplate: false,
+};
+
+// Datos estructurados: solo información real del negocio (no hay dirección postal ni local público).
+const organizationId = `${SITE?.site}/#organization`;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE?.site}/#website`,
+    name: SITE?.name,
+    url: SITE?.site,
+    inLanguage: I18N?.language,
+    publisher: { '@id': organizationId },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': organizationId,
+    name: BUSINESS_NAME,
+    url: SITE?.site,
+    logo: new URL(favIconSvg.src, SITE?.site).toString(),
+    telephone: '+5493471357857',
+    email: EMAIL,
+    description:
+      'Venta de maquinaria, implementos y repuestos agrícolas, galpones, estructuras metálicas, tinglados, silos, norias, básculas y caladores hidráulicos.',
+    areaServed: { '@type': 'Country', name: 'Argentina' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Melincué', addressRegion: 'Santa Fe', addressCountry: 'AR' },
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+    sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <StructuredData slot="head" schema={structuredData} />
+
+  <!-- Hero ************************** -->
+  <Hero2
+    id="inicio"
+    tagline="Melincué, Santa Fe · Envíos a todo el país"
+    actions={[whatsappAction(), { text: 'Ver qué vendemos', href: '#servicios' }]}
+    image={{
+      src: '~/assets/images/arbel/new-holland-tm190.jpg',
+      alt: 'Flyer de Arbel Agroventas con un tractor New Holland TM 190 azul',
+      aspect: 'auto',
+    }}
+  >
+    <Fragment slot="title">
+      Maquinaria e implementos <span class="text-accent">para tu campo</span>
+    </Fragment>
+    <Fragment slot="subtitle">
+      En <span class="font-semibold">Arbel Agroventas</span> vendemos cosechadoras, tractores, cabezales, acoplados,
+      sembradoras, silos, tinglados y más. Escribinos y te contamos qué equipos hay, a cualquier hora.
+    </Fragment>
+  </Hero2>
+
+  <!-- Qué vendemos ****************** -->
+  <Features2
+    id="servicios"
+    tagline="Qué vendemos"
+    title="Todo lo que necesita tu campo, en un solo lugar"
+    subtitle="Elegí una categoría para ver los equipos y consultanos por el que te interesa."
+    columns={3}
+    items={categorias.map((c) => ({
+      title: c.title,
+      description: c.summary,
+      icon: c.icon,
+      href: `/services#${c.id}`,
+    }))}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-teal-50"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- WhatsApp tras servicios ******* -->
+  <CallToAction id="consulta" actions={[whatsappAction()]}>
+    <Fragment slot="title">¿Buscás un equipo en particular?</Fragment>
+    <Fragment slot="subtitle">
+      Contanos qué necesitás y te respondemos por WhatsApp. También podés consultar por cambios de equipos.
+    </Fragment>
+  </CallToAction>
+
+  <!-- Flyers del Instagram ********** -->
+  <WidgetWrapper id="equipos" containerClass="max-w-6xl mx-auto">
+    <Headline
+      tagline="Equipos recientes"
+      title="Algunos de los equipos que pasaron por Arbel"
+      subtitle="Publicaciones de nuestro Instagram. Las unidades van cambiando: consultanos por disponibilidad."
+    />
+    <ul class="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4 list-none">
+      {
+        flyers.map((flyer) => (
+          <li class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+            <Image
+              src={flyer.src}
+              alt={flyer.alt}
+              width={540}
+              height={675}
+              widths={[270, 540]}
+              sizes="(max-width: 1023px) 50vw, 270px"
+              layout="constrained"
+              format="webp"
+              class="h-auto w-full"
+            />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-8 text-center">
+      <a
+        href={INSTAGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-semibold text-primary hover:underline">Ver más en Instagram @arbel.agroventas</a
+      >
+    </p>
+  </WidgetWrapper>
+
+  <!-- Cómo trabajamos *************** -->
+  <Steps2
+    id="como-trabajamos"
+    classes={{ container: '[&_.bg-blue-100]:!bg-teal-100' }}
+    tagline="Cómo trabajamos"
+    title="Consultar y comprar es simple"
+    items={[
+      {
+        title: 'Escribinos',
+        description: 'Mandanos un mensaje por WhatsApp con el equipo o la categoría que buscás.',
+        icon: 'tabler:brand-whatsapp',
+      },
+      {
+        title: 'Te respondemos',
+        description: 'Carlos te pasa la información de los equipos disponibles y responde tus dudas.',
+        icon: 'tabler:message-circle',
+      },
+      {
+        title: 'Coordinamos la entrega',
+        description: 'Atendemos online y de forma presencial, y enviamos a distintos puntos del país.',
+        icon: 'tabler:truck',
+      },
+    ]}
+  />
+
+  <!-- Preguntas frecuentes ********** -->
+  <FAQs
+    id="preguntas-frecuentes"
+    tagline="Preguntas frecuentes"
+    title="Lo que más nos consultan"
+    schema
+    items={[
+      {
+        title: '¿Qué tipo de equipos venden?',
+        description:
+          'Maquinaria e implementos agrícolas: cosechadoras, tractores, cabezales, acoplados, tolvas, sembradoras y más. También silos, norias, básculas, caladores hidráulicos, galpones, estructuras metálicas, tinglados y repuestos.',
+      },
+      {
+        title: '¿Cómo consulto por un equipo?',
+        description: `Por WhatsApp, escribiendo al <a class="text-primary underline" href="${waLink()}" target="_blank" rel="noopener noreferrer">3471 35-7857</a>, o por mail a ${EMAIL}. Atendemos las 24 horas.`,
+      },
+      {
+        title: '¿Publican los precios en la web?',
+        description:
+          'No. Los precios se consultan directamente por WhatsApp, porque varían según el equipo y la operación.',
+      },
+      {
+        title: '¿Hacen envíos a otras provincias?',
+        description:
+          'Sí. En nuestras publicaciones hay equipos entregados en Santa Fe, Buenos Aires, Córdoba, Entre Ríos, Santiago del Estero y Chubut. Consultanos por tu localidad y coordinamos.',
+      },
+      {
+        title: '¿Puedo ver el equipo en persona?',
+        description:
+          'Atendemos de forma online y presencial. Escribinos por WhatsApp y coordinamos cómo y cuándo verlo.',
+      },
+      {
+        title: '¿Qué marcas manejan?',
+        description:
+          'En nuestras publicaciones aparecen marcas como Case IH, Claas, Massey Ferguson, John Deere, New Holland, Zanello, Vassalli, Allochis, Akron y Randon, entre otras. Los equipos van cambiando, por eso conviene consultar disponibilidad.',
+      },
+      {
+        title: '¿Aceptan equipos en parte de pago o cambios?',
+        description:
+          'En algunas operaciones hacemos negocios de cambio entre equipos, por ejemplo con cabezales. Contanos qué tenés y qué buscás, y lo vemos por WhatsApp.',
+      },
+    ]}
+  />
+
+  <!-- Cierre ************************ -->
+  <CallToAction id="contacto-final" layout="banner" actions={[whatsappAction()]}>
+    <Fragment slot="title">Tu próximo equipo está a un mensaje</Fragment>
+    <Fragment slot="subtitle">Consultá por WhatsApp, a cualquier hora, y te respondemos.</Fragment>
+  </CallToAction>
+</Layout>

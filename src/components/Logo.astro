@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import { SITE } from 'astrowind:config';
+import logoMark from '~/assets/images/arbel/logo-mark.png';
+---
+
+<span class="flex items-center gap-2">
+  <Image src={logoMark} alt="" width={36} height={36} class="h-9 w-9 rounded-md" loading="eager" />
+  <span class="text-xl md:text-lg font-bold text-heading whitespace-nowrap">{SITE?.name}</span>
+</span>

@@ -1,0 +1,74 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { whatsappAction } from '~/data/contact';
+
+const metadata = {
+  title: 'Nosotros: Carlos Arbel y Arbel Agroventas en Melincué',
+  description:
+    'Conocé Arbel Agroventas, de Carlos Arbel: venta de maquinaria, implementos y estructuras agrícolas desde Melincué, Santa Fe, con envíos a todo el país.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Nosotros"
+    title="Arbel Agroventas, de Carlos Arbel"
+    subtitle="Vendemos maquinaria, implementos y estructuras agrícolas desde Melincué, Santa Fe, para quienes trabajan el campo."
+  />
+
+  <Content
+    id="quienes-somos"
+    tagline="Quiénes somos"
+    title="Un trato directo, de Carlos Arbel a tu campo"
+    content="Arbel Agroventas es el negocio de Carlos Arbel. Vendemos maquinaria e implementos agrícolas, galpones, estructuras metálicas y tinglados, silos, norias, básculas y caladores hidráulicos."
+    items={[
+      { title: 'Dueños de campos', description: 'Equipos e infraestructura para producir y almacenar.' },
+      { title: 'Cosechadores y sembradores', description: 'Cabezales, sembradoras, cosechadoras y tractores.' },
+      { title: 'Contratistas rurales', description: 'Acoplados, tolvas e implementos para el trabajo diario.' },
+      { title: 'Dueños de maquinaria agrícola', description: 'Repuestos, accesorios y negocios de cambio de equipos.' },
+    ]}
+    image={{
+      src: '~/assets/images/arbel/carlos-arbel.jpg',
+      alt: 'Carlos Arbel, dueño de Arbel Agroventas, sonriendo con lentes de sol',
+      aspect: '1/1',
+    }}
+    isReversed
+  />
+
+  <Features
+    id="como-atendemos"
+    tagline="Cómo atendemos"
+    title="Consulta y venta por WhatsApp"
+    columns={3}
+    items={[
+      {
+        title: 'Online y presencial',
+        description: 'Atendemos de las dos maneras. Escribinos y coordinamos lo que te quede más cómodo.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'A cualquier hora',
+        description: 'Recibimos tus consultas por WhatsApp las 24 horas.',
+        icon: 'tabler:clock',
+      },
+      {
+        title: 'Envíos a todo el país',
+        description: 'Hemos entregado equipos en varias provincias. Consultanos por tu localidad.',
+        icon: 'tabler:truck',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-teal-50"></div>
+    </Fragment>
+  </Features>
+
+  <CallToAction id="consulta" layout="banner" actions={[whatsappAction()]}>
+    <Fragment slot="title">Hablemos de lo que necesitás</Fragment>
+    <Fragment slot="subtitle">Escribinos por WhatsApp y te respondemos.</Fragment>
+  </CallToAction>
+</Layout>
